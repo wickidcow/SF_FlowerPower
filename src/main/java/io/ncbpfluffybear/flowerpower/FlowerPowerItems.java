@@ -22,7 +22,7 @@ import utils.ItemTags;
 public class FlowerPowerItems {
 
     public static final ItemGroup FLOWERPOWER_CATEGORY = new ItemGroup(new NamespacedKey(FlowerPowerPlugin.getInstance(),
-            "flowerpower_category"), new CustomItemStack(Material.ALLIUM, "&5Flower Power")
+            "flowerpower_category"), CustomItemStack.create(Material.ALLIUM, "&5Flower Power")
     );
     // Multiblocks
     public static final SlimefunItemStack MAGIC_BASIN = new SlimefunItemStack("MAGIC_BASIN",
@@ -207,7 +207,7 @@ public class FlowerPowerItems {
             ItemTags.MAGICAL_ITEM
     );
     public static final SlimefunItemStack INFINITY_APPLE = new SlimefunItemStack("INFINITY_APPLE",
-            new CustomItemStack(SlimefunUtils.getCustomHead("99a79d7e5d1ba739ab4471643e744ef781f7c1d4ea52efc99168d6cb5732326")),
+            CustomItemStack.create(SlimefunUtils.getCustomHead("99a79d7e5d1ba739ab4471643e744ef781f7c1d4ea52efc99168d6cb5732326"),
             "&eInfinity Apple",
             "",
             "&7&oConverts experience to food",
@@ -216,7 +216,7 @@ public class FlowerPowerItems {
             "",
             "&aCost: " + InfinityApple.EXP_PER_CONSUME + " exp point per " + InfinityApple.FOOD_PER_CONSUME + " hunger",
             ItemTags.MAGICAL_ITEM
-    );
+    ));
     public static final SlimefunItemStack INFINITY_BANDAGE = new SlimefunItemStack("INFINITY_BANDAGE",
             Material.PAPER,
             "&cInfinity Bandage",

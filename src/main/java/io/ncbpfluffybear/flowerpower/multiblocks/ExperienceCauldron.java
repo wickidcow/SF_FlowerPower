@@ -95,7 +95,7 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
         }
 
         // Crafting with wand
-        if (SlimefunUtils.isItemSimilar(handItem, FlowerPowerItems.MAGICAL_WAND, false, false)) {
+        if (SlimefunUtils.isItemSimilar(handItem, FlowerPowerItems.MAGICAL_WAND.item(), false, false)) {
 
             if (cauldronLevel == 0) {
                 Utils.send(p, "&cThis Experience Cauldron is out of experience!");

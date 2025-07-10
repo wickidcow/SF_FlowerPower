@@ -16,6 +16,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import utils.Utils;
@@ -67,8 +68,9 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
 
             // Add specified attribute to offhand
             double level = ThreadLocalRandom.current().nextDouble(minLevel.getValue(), maxLevel.getValue());
-            AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), type.attribute.getKey().getKey(),
-                    level, type.operation, EquipmentSlot.OFF_HAND);
+            NamespacedKey key = type.attribute.getKey();
+            AttributeModifier modifier = new AttributeModifier(key,
+                    level, type.operation, EquipmentSlotGroup.OFFHAND);
             charmMeta.addAttributeModifier(type.attribute, modifier);
 
             // Update lore
