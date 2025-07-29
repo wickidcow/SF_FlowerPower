@@ -9,7 +9,6 @@ import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.ncbpfluffybear.flowerpower.FlowerPowerItems;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -228,7 +227,13 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
     }
 
     private static boolean useNewCauldrons() {
-        return Constants.SERVER_VERSION.contains("1.17") || Constants.SERVER_VERSION.contains("1.18") || Constants.SERVER_VERSION.contains("1.19") || Constants.SERVER_VERSION.contains("1.20");
+        try {
+            int middleVersion = Integer.parseInt(Constants.SERVER_VERSION.split("\\.")[1]);
+//            System.out.println("SERVER_VERSION: " + Constants.SERVER_VERSION);
+//            System.out.println("Middle Version: " + middleVersion);
+            return middleVersion >= 17;
+        } catch (NumberFormatException ignored) {}
+        return Constants.SERVER_VERSION.contains("1.17") || Constants.SERVER_VERSION.contains("1.18") || Constants.SERVER_VERSION.contains("1.19") || Constants.SERVER_VERSION.contains("1.20") || Constants.SERVER_VERSION.contains("1.21");
     }
 
     /**
