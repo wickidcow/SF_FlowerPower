@@ -12,19 +12,20 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
-import utils.Constants;
 import utils.ItemTags;
 
 /**
- * SlimefunItemStack registration
+ * SlimefunItemStack registration.
+ *
  * @author NCBPFluffyBear
  */
 public class FlowerPowerItems {
 
-    public static final ItemGroup FLOWERPOWER_CATEGORY = new ItemGroup(new NamespacedKey(FlowerPowerPlugin.getInstance(),
-            "flowerpower_category"), CustomItemStack.create(Material.ALLIUM, "&5Flower Power")
+    public static final ItemGroup FLOWERPOWER_CATEGORY = new ItemGroup(
+            new NamespacedKey(FlowerPowerPlugin.getInstance(), "flowerpower_category"),
+            new CustomItemStack(Material.ALLIUM, "&5Flower Power")
     );
-    // Multiblocks
+
     public static final SlimefunItemStack MAGIC_BASIN = new SlimefunItemStack("MAGIC_BASIN",
             Material.CAULDRON,
             "&bMagic Basin",
@@ -34,7 +35,7 @@ public class FlowerPowerItems {
             "&eRight click &7with a Magic Wand to activate",
             ItemTags.MULTIBLOCK
     );
-    // Blocks
+
     public static final SlimefunItemStack EXPERIENCE_CAULDRON = new SlimefunItemStack("EXPERIENCE_CAULDRON",
             Material.CAULDRON,
             "&aExperience Cauldron",
@@ -46,7 +47,7 @@ public class FlowerPowerItems {
             "&eSneak and Right Click &7to withdraw exp",
             ItemTags.MULTIBLOCK
     );
-    // Glistening Flowers
+
     public static final SlimefunItemStack GLISTENING_POPPY = new SlimefunItemStack("GLISTENING_POPPY",
             Material.POPPY,
             "&aGlistening Poppy",
@@ -55,6 +56,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack GLISTENING_DANDELION = new SlimefunItemStack("GLISTENING_DANDELION",
             Material.DANDELION,
             "&aGlistening Dandelion",
@@ -63,6 +65,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack GLISTENING_OXEYE_DAISY = new SlimefunItemStack("GLISTENING_OXEYE_DAISY",
             Material.OXEYE_DAISY,
             "&aGlistening Oxeye Daisy",
@@ -71,6 +74,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack GLISTENING_ALLIUM = new SlimefunItemStack("GLISTENING_ALLIUM",
             Material.ALLIUM,
             "&aGlistening Allium",
@@ -79,7 +83,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
-    // Items
+
     public static final SlimefunItemStack MAGICAL_WAND = new SlimefunItemStack("MAGICAL_WAND",
             Material.BLAZE_ROD,
             "&5Magical Wand",
@@ -89,6 +93,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.TOOL
     );
+
     public static final SlimefunItemStack MAGIC_CREAM = new SlimefunItemStack("MAGIC_CREAM",
             Material.MAGMA_CREAM,
             "&6&lMagic Cream",
@@ -97,6 +102,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack OVERGROWTH_SEED = new SlimefunItemStack("OVERGROWTH_SEED",
             Material.WHEAT_SEEDS,
             "&3Flowering Seed",
@@ -107,7 +113,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
-    // Flower Crystals
+
     public static final SlimefunItemStack RED_CRYSTAL = new SlimefunItemStack("RED_CRYSTAL",
             Material.RED_GLAZED_TERRACOTTA,
             "&cRed Crystal",
@@ -116,6 +122,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack YELLOW_CRYSTAL = new SlimefunItemStack("YELLOW_CRYSTAL",
             Material.YELLOW_GLAZED_TERRACOTTA,
             "&eYellow Crystal",
@@ -124,6 +131,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack WHITE_CRYSTAL = new SlimefunItemStack("WHITE_CRYSTAL",
             Material.WHITE_GLAZED_TERRACOTTA,
             "&fWhite Crystal",
@@ -132,6 +140,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack PURPLE_CRYSTAL = new SlimefunItemStack("PURPLE_CRYSTAL",
             Material.PURPLE_GLAZED_TERRACOTTA,
             "&5Purple Crystal",
@@ -140,6 +149,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.CRAFTING_ITEM
     );
+
     public static final SlimefunItemStack MOVEMENT_SPEED_CHARM = new SlimefunItemStack("MOVEMENT_SPEED_CHARM",
             Material.SUGAR,
             "&aMovement Speed Charm",
@@ -149,6 +159,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack ATTACK_SPEED_CHARM = new SlimefunItemStack("ATTACK_SPEED_CHARM",
             Material.SUGAR,
             "&aAttack Speed Charm",
@@ -158,6 +169,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack FLY_SPEED_CHARM = new SlimefunItemStack("FLY_SPEED_CHARM",
             Material.SUGAR,
             "&aFly Speed Charm",
@@ -167,6 +179,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack DAMAGE_CHARM = new SlimefunItemStack("DAMAGE_CHARM",
             Material.SUGAR,
             "&aDamage Charm",
@@ -176,6 +189,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack HEALTH_CHARM = new SlimefunItemStack("HEALTH_CHARM",
             Material.SUGAR,
             "&aHealth Charm",
@@ -185,6 +199,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack KNOCKBACK_RESISTANCE_CHARM = new SlimefunItemStack("KNOCKBACK_RESISTANCE_CHARM",
             Material.SUGAR,
             "&7Knockback Resistance Charm",
@@ -194,6 +209,7 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack EXPERIENCE_TOME = new SlimefunItemStack("EXPERIENCE_TOME",
             Material.ENCHANTED_BOOK,
             "&eExperience Tome &a(0 / 1000000)",
@@ -206,17 +222,21 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack INFINITY_APPLE = new SlimefunItemStack("INFINITY_APPLE",
-            CustomItemStack.create(SlimefunUtils.getCustomHead("99a79d7e5d1ba739ab4471643e744ef781f7c1d4ea52efc99168d6cb5732326"),
-            "&eInfinity Apple",
-            "",
-            "&7&oConverts experience to food",
-            "",
-            "&eRight Click &7to eat",
-            "",
-            "&aCost: " + InfinityApple.EXP_PER_CONSUME + " exp point per " + InfinityApple.FOOD_PER_CONSUME + " hunger",
-            ItemTags.MAGICAL_ITEM
-    ));
+            new CustomItemStack(
+                    SlimefunUtils.getCustomHead("99a79d7e5d1ba739ab4471643e744ef781f7c1d4ea52efc99168d6cb5732326"),
+                    "&eInfinity Apple",
+                    "",
+                    "&7&oConverts experience to food",
+                    "",
+                    "&eRight Click &7to eat",
+                    "",
+                    "&aCost: " + InfinityApple.EXP_PER_CONSUME + " exp point per " + InfinityApple.FOOD_PER_CONSUME + " hunger",
+                    ItemTags.MAGICAL_ITEM
+            )
+    );
+
     public static final SlimefunItemStack INFINITY_BANDAGE = new SlimefunItemStack("INFINITY_BANDAGE",
             Material.PAPER,
             "&cInfinity Bandage",
@@ -228,6 +248,7 @@ public class FlowerPowerItems {
             "&aCost: " + InfinityBandage.EXP_PER_CONSUME + " exp points per " + InfinityBandage.HEALTH_PER_CONSUME + " health",
             ItemTags.MAGICAL_ITEM
     );
+
     public static final SlimefunItemStack RECALL_CHARM = new SlimefunItemStack("RECALL_CHARM",
             Material.ENDER_EYE,
             "&5Recall Charm",
@@ -261,8 +282,6 @@ public class FlowerPowerItems {
         item.setItemMeta(meta);
     }
 
-
     private FlowerPowerItems() {
     }
-
 }
