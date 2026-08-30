@@ -7,9 +7,6 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.ncbpfluffybear.flowerpower.objects.FPNotPlaceable;
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -17,10 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import utils.Utils;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * A {@link io.github.thebusybiscuit.slimefun4.implementation.items.medical.Bandage} that consumes experience
- * instead of the item
+ * A reusable bandage that consumes experience instead of the item.
  *
  * @author NCBPFluffyBear
  */
@@ -48,31 +46,24 @@ public class InfinityBandage extends SimpleSlimefunItem<ItemUseHandler> implemen
 
             int exp = Utils.getTotalExperience(p);
             double health = p.getHealth();
-            double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double maxHealth = p.getAttribute(Attribute.MAX_HEALTH).getValue();
 
-            // Check if player has enough exp
             if (exp < EXP_PER_CONSUME) {
                 Utils.send(p, "&cYou can not afford this! Needed exp points: " + EXP_PER_CONSUME);
                 return;
             }
 
-            // Check if player needs healing
             if (health >= maxHealth) {
                 Utils.send(p, "&cYour health is already full!");
                 return;
             }
 
-            // Consume exp and heal player
             p.giveExp(-EXP_PER_CONSUME);
-            double newHealth = health + HEALTH_PER_CONSUME;
-            if (newHealth > maxHealth) {
-                newHealth = maxHealth;
-            }
+            double newHealth = Math.min(health + HEALTH_PER_CONSUME, maxHealth);
             p.setHealth(newHealth);
             cooldowns.put(p, System.currentTimeMillis());
 
             p.playSound(p.getLocation(), Sound.ENTITY_CAT_HISS, 1, 1);
-
         };
     }
 
