@@ -58,10 +58,26 @@ jobs:
           ref: dev
           path: .deps/Slimefun-United
 
+      - name: Set up Java 21 for Slimefun United source build
+        if: matrix.slimefun == 'united'
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
       - name: Publish Slimefun United API locally
         if: matrix.slimefun == 'united'
         working-directory: .deps/Slimefun-United
         run: mvn -B -DskipTests install
+
+      - name: Restore Java 25 for FlowerPower validation
+        if: matrix.slimefun == 'united'
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
 
       - name: Verify Paper 26.1.x
         shell: bash
@@ -74,8 +90,9 @@ jobs:
           else
             SF_GROUP="io.github.slimefun_united"
             SF_ARTIFACT="slimefun-united"
-            SF_VERSION="4.10-SNAPSHOT"
+            SF_VERSION="$(mvn -q -f .deps/Slimefun-United/pom.xml help:evaluate -Dexpression=project.version -DforceStdout)"
           fi
+          echo "Testing against $SF_GROUP:$SF_ARTIFACT:$SF_VERSION on Paper 26.1.x"
           mvn -B clean verify \
             -Dpaper.version='[26.1.build,26.2.build)' \
             -Dslimefun.groupId="$SF_GROUP" \
@@ -93,8 +110,9 @@ jobs:
           else
             SF_GROUP="io.github.slimefun_united"
             SF_ARTIFACT="slimefun-united"
-            SF_VERSION="4.10-SNAPSHOT"
+            SF_VERSION="$(mvn -q -f .deps/Slimefun-United/pom.xml help:evaluate -Dexpression=project.version -DforceStdout)"
           fi
+          echo "Testing against $SF_GROUP:$SF_ARTIFACT:$SF_VERSION on Paper 26.2"
           mvn -B clean verify \
             -Dpaper.version='[26.2.build,)' \
             -Dslimefun.groupId="$SF_GROUP" \
