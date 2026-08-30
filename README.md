@@ -5,7 +5,8 @@
 **Flower-powered magic, experience storage, charms, teleportation, and utility items for modern Slimefun servers.**
 
 ![Slimefun Legacy](https://img.shields.io/badge/Slimefun-Legacy-6bd425?style=for-the-badge)
-![Paper 26.2+](https://img.shields.io/badge/Paper-26.2%2B-blue?style=for-the-badge)
+![Minecraft 1.21.11](https://img.shields.io/badge/Minecraft-1.21.11-62b47a?style=for-the-badge)
+![Paper 26.1.x / 26.2](https://img.shields.io/badge/Paper-26.1.x%20%7C%2026.2-blue?style=for-the-badge)
 ![Java 21+](https://img.shields.io/badge/Java-21%2B-orange?style=for-the-badge)
 ![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue?style=for-the-badge)
 ![Maintained for AlbionMC.com](https://img.shields.io/badge/Maintained%20for-albionmc.com-7b68ee?style=for-the-badge)
@@ -13,11 +14,11 @@
 </div>
 
 > [!IMPORTANT]
-> FlowerPower Legacy is an **unofficial community-maintained fork** for Slimefun Legacy. It preserves the original FlowerPower identity and Slimefun item IDs while keeping the addon usable on modern servers.
+> FlowerPower Legacy is an **unofficial community-maintained fork** for modern Slimefun servers. It preserves the original FlowerPower identity and Slimefun item IDs while maintaining compatibility with **Slimefun Legacy** and compile-testing against **Slimefun United**.
 
 ## 🌺 What does FlowerPower add?
 
-FlowerPower expands Slimefun with a small magic progression centered around flowers, experience, charms, and reusable utility items.
+FlowerPower expands Slimefun with a compact magic progression centered around flowers, experience, charms, and reusable utility items.
 
 ### ✨ Core progression
 
@@ -35,17 +36,32 @@ FlowerPower expands Slimefun with a small magic progression centered around flow
 - **Infinity Bandage** — reusable healing powered by experience.
 - **Recall Charm** — bind a location and later teleport back to it at an experience cost.
 
-## 🧪 Slimefun Legacy maintenance
+## 🧪 Compatibility targets
 
-This fork is maintained as part of the Slimefun Legacy addon collection. The maintenance branch builds and validates against the current **Slimefun Legacy** API and modern Paper rather than relying on the abandoned Blob Builds pipeline.
+FlowerPower `1.0.1` is maintained for:
 
-Current compatibility work includes:
+| Component | Target |
+| --- | --- |
+| Minecraft | **1.21.11** |
+| Paper | **26.1.x and 26.2** |
+| Java | **21+ bytecode**, CI on Java 25 |
+| Primary Slimefun | **Slimefun Legacy** |
+| Secondary compatibility | **Slimefun United** |
 
-- Java 21+ source compatibility with CI validation on Java 25;
-- Paper 26.2+ build targeting;
+GitHub Actions builds the addon against both Slimefun implementations and checks both supported Paper generations. The release JAR is produced from the Slimefun Legacy validation path while keeping the addon API surface compatible with Slimefun United.
+
+## 🛠️ Slimefun Legacy maintenance
+
+This fork replaces the abandoned Blob Builds pipeline with current GitHub Actions validation and raw JAR releases. Compatibility work includes:
+
+- Java 21-compatible output with modern Java 25 build validation;
+- Minecraft 1.21.11 support;
+- Paper 26.1.x and Paper 26.2 compatibility checks;
+- build verification against Slimefun Legacy and Slimefun United;
 - current Slimefun item-stack access and `CustomItemStack` APIs;
 - modern Bukkit attribute modifier handling;
 - safer Minecraft-version detection for the Experience Cauldron;
+- removal of the obsolete in-plugin Blob Builds updater;
 - preservation of existing FlowerPower item IDs and gameplay wherever practical;
 - raw release JAR output with stable versioned filenames.
 
@@ -57,7 +73,7 @@ Release builds are published as a raw JAR named:
 
 `SF_FlowerPower1.0.1.jar`
 
-Install **Slimefun Legacy** first, then place the FlowerPower JAR in your server's `plugins` directory and restart the server.
+Install either **Slimefun Legacy** or a compatible **Slimefun United** build first, place the FlowerPower JAR in the server's `plugins` directory, and restart the server.
 
 ## ❤️ Credits & project lineage
 
@@ -81,9 +97,9 @@ The software is provided **without warranty** as described by GPLv3.
 
 **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**
 
-FlowerPower, Slimefun Legacy, and this maintenance fork are independent community projects. They are not sponsored, endorsed, approved, or operated by Mojang Studios or Microsoft. Minecraft-related names, brands, and assets remain the property of their respective rights holders.
+FlowerPower, Slimefun Legacy, Slimefun United, and this maintenance fork are independent community projects. They are not sponsored, endorsed, approved, or operated by Mojang Studios or Microsoft. Minecraft-related names, brands, and assets remain the property of their respective rights holders.
 
-This repository is not represented as an official release of NCBPFluffyBear, captainbboy, the original Slimefun developers, or any other upstream party unless explicitly stated by them.
+This repository is not represented as an official release of NCBPFluffyBear, captainbboy, the original Slimefun developers, Slimefun United, or any other upstream party unless explicitly stated by them.
 
 ---
 
