@@ -11,7 +11,8 @@
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <paper.version>[26.2.build,)</paper.version>
+        <!-- Lowest supported Paper generation. CI also compiles explicitly against 26.2. -->
+        <paper.version>[26.1.build,26.2.build)</paper.version>
         <slimefun.groupId>com.github.SlimefunGuguProject</slimefun.groupId>
         <slimefun.artifactId>Slimefun4</slimefun.artifactId>
         <slimefun.version>2025.1</slimefun.version>
