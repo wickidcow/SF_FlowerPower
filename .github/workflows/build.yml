@@ -146,6 +146,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout release target
+        uses: actions/checkout@v6
+
       - name: Download validated raw JAR
         uses: actions/download-artifact@v8
         with:
@@ -169,9 +172,9 @@ jobs:
           TAG="v${RELEASE_VERSION}"
           JAR="dist/${OUTPUT_NAME}"
           NOTES="FlowerPower 1.0.1 for Minecraft 1.21.11 and Paper 26.1.x/26.2. Builds are validated against both Slimefun Legacy and Slimefun United. The release asset is the raw ${OUTPUT_NAME} JAR."
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$JAR" --clobber
-            gh release edit "$TAG" --title "SF_FlowerPower ${RELEASE_VERSION}" --notes "$NOTES"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$JAR" --clobber --repo "$GITHUB_REPOSITORY"
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --title "SF_FlowerPower ${RELEASE_VERSION}" --notes "$NOTES"
           else
-            gh release create "$TAG" "$JAR" --target "$GITHUB_SHA" --title "SF_FlowerPower ${RELEASE_VERSION}" --notes "$NOTES"
+            gh release create "$TAG" "$JAR" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SF_FlowerPower ${RELEASE_VERSION}" --notes "$NOTES"
           fi
