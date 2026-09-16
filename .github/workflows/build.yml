@@ -46,9 +46,21 @@ jobs:
       - name: Publish Slimefun Legacy API locally
         if: matrix.slimefun == 'legacy'
         working-directory: .deps/Slimefun-Legacy
+        shell: bash
         run: |
+          set -euo pipefail
           chmod +x gradlew
-          ./gradlew publishToMavenLocal -PprojectVersion=FLOWERPOWER-LEGACY-SNAPSHOT --no-daemon
+          for attempt in 1 2 3; do
+            if ./gradlew publishToMavenLocal -PprojectVersion=FLOWERPOWER-LEGACY-SNAPSHOT --no-daemon --refresh-dependencies; then
+              break
+            fi
+            if [[ "$attempt" -eq 3 ]]; then
+              echo "Slimefun Legacy dependency build failed after 3 attempts." >&2
+              exit 1
+            fi
+            echo "Transient dependency failure on attempt ${attempt}/3; retrying..."
+            sleep $((attempt * 15))
+          done
 
       - name: Checkout Slimefun United
         if: matrix.slimefun == 'united'
