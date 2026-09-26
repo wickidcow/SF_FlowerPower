@@ -6,9 +6,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.ncbpfluffybear.flowerpower.FlowerPowerItems;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -54,7 +54,7 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
         }
 
         Block b = optB.get();
-        SlimefunItem sfItem = BlockStorage.check(b);
+        SlimefunItem sfItem = getSlimefunItem(b);
         if (sfItem == null || !isItem(sfItem.getItem())) {
             return;
         }
@@ -135,10 +135,17 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     private void onCauldronLevelChange(CauldronLevelChangeEvent e) {
-        SlimefunItem sfItem = BlockStorage.check(e.getBlock());
+        SlimefunItem sfItem = getSlimefunItem(e.getBlock());
         if (sfItem != null && isItem(sfItem.getItem())) {
             e.setCancelled(true);
         }
+    }
+
+    private static SlimefunItem getSlimefunItem(Block block) {
+        var data = Slimefun.getDatabaseManager()
+                .getBlockDataController()
+                .getBlockData(block.getLocation());
+        return data == null ? null : SlimefunItem.getById(data.getSfId());
     }
 
     private static void changeLevel(Block b, int change) {
