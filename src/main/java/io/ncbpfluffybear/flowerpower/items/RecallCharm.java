@@ -10,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.Persis
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -68,10 +69,10 @@ public class RecallCharm extends SimpleSlimefunItem<ItemUseHandler> {
                         l.getBlockX() + "_" + l.getBlockY() + "_" + l.getBlockZ());
 
                 // Put location info into lore
-                List<String> lore = charmMeta.getLore();
-                lore.set(LORE_INDEX, Utils.color("&3Bound Location: " + l.getWorld().getName() + " @ " +
+                List<Component> lore = charmMeta.lore();
+                lore.set(LORE_INDEX, Utils.colorComponent("&3Bound Location: " + l.getWorld().getName() + " @ " +
                         l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ()));
-                charmMeta.setLore(lore);
+                charmMeta.lore(lore);
                 charm.setItemMeta(charmMeta);
 
                 Utils.send(p, "&aYour recall charm has been bound to your current location");
