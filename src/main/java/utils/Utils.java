@@ -3,7 +3,8 @@ package utils;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -15,14 +16,21 @@ import org.bukkit.scheduler.BukkitTask;
  */
 public class Utils {
 
+    private static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
+    private static final LegacyComponentSerializer LEGACY_SECTION = LegacyComponentSerializer.legacySection();
+
     public Utils() {}
 
     public static String color(String msg) {
-        return ChatColor.translateAlternateColorCodes('&', msg);
+        return LEGACY_SECTION.serialize(colorComponent(msg));
+    }
+
+    public static Component colorComponent(String msg) {
+        return LEGACY_AMPERSAND.deserialize(msg);
     }
 
     public static void send(CommandSender s, String msg) {
-        s.sendMessage(color("&5&l[&dFlowerPower&5&l] " + msg));
+        s.sendMessage(colorComponent("&5&l[&dFlowerPower&5&l] " + msg));
     }
 
     public static void registerEvents(Listener listener) {
