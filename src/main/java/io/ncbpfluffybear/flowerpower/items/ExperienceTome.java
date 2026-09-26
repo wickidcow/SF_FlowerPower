@@ -116,7 +116,7 @@ public class ExperienceTome extends SlimefunItem implements Listener {
         }
 
         // Update name to display stored amount
-        tomeMeta.setDisplayName(Utils.color("&eExperience Tome &a(" + tomeExp + " / 1000000)"));
+        tomeMeta.displayName(Utils.colorComponent("&eExperience Tome &a(" + tomeExp + " / 1000000)"));
         tome.setItemMeta(tomeMeta);
     }
 }
