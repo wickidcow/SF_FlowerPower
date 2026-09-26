@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -66,9 +67,9 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
             AttributeModifier modifier = new AttributeModifier(key, level, type.operation, EquipmentSlotGroup.OFFHAND);
             charmMeta.addAttributeModifier(type.attribute, modifier);
 
-            List<String> lore = charmMeta.getLore();
-            lore.set(LORE_INDEX, Utils.color("&aThis charm has been inspected"));
-            charmMeta.setLore(lore);
+            List<Component> lore = charmMeta.lore();
+            lore.set(LORE_INDEX, Utils.colorComponent("&aThis charm has been inspected"));
+            charmMeta.lore(lore);
 
             p.playSound(p.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 1);
             PersistentDataAPI.setByte(charmMeta, inspectedKey, (byte) 1);
