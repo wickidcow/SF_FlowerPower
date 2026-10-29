@@ -72,6 +72,9 @@ class ImmutableReleaseTest(unittest.TestCase):
         self.assertIn('OUTPUT_NAME: "SF_FlowerPower1.0.3.jar"', workflow)
         self.assertIn("name: Publish 1.0.3 raw JAR", workflow)
         self.assertIn("-Dpaper.version=26.3.build.176-stable", workflow)
+        self.assertIn("name: FlowerPower", workflow)
+        self.assertIn("main: io.ncbpfluffybear.flowerpower.FlowerPowerPlugin", workflow)
+        self.assertIn("io/ncbpfluffybear/flowerpower/FlowerPowerPlugin.class", workflow)
         self.assertNotIn("26.3-rc-3.build.1-alpha", workflow)
 
     def test_workflow_does_not_publish_on_push_or_pr(self):
