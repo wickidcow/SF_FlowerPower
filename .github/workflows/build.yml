@@ -12,8 +12,8 @@ permissions:
   contents: read
 
 env:
-  RELEASE_VERSION: "1.0.2"
-  OUTPUT_NAME: "SF_FlowerPower1.0.2.jar"
+  RELEASE_VERSION: "1.0.3"
+  OUTPUT_NAME: "SF_FlowerPower1.0.3.jar"
 
 jobs:
   compatibility:
@@ -141,10 +141,10 @@ jobs:
           -Dslimefun.artifactId=${{ steps.sf.outputs.artifact }}
           -Dslimefun.version=${{ steps.sf.outputs.version }}
 
-      - name: Verify Paper 26.3 alpha
+      - name: Verify stable Paper 26.3
         run: >-
           mvn -B clean verify
-          -Dpaper.version=26.3-rc-3.build.1-alpha
+          -Dpaper.version=26.3.build.176-stable
           -Dslimefun.groupId=${{ steps.sf.outputs.group }}
           -Dslimefun.artifactId=${{ steps.sf.outputs.artifact }}
           -Dslimefun.version=${{ steps.sf.outputs.version }}
@@ -180,7 +180,7 @@ jobs:
           if-no-files-found: error
 
   release:
-    name: Publish 1.0.2 raw JAR
+    name: Publish 1.0.3 raw JAR
     needs: compatibility
     if: github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
