@@ -28,7 +28,7 @@ jobs:
       - name: Checkout FlowerPower
         uses: actions/checkout@v6
       - name: Regression-test immutable manual publication policy (offline)
-        run: python3 -m unittest discover -s scripts -p 'test_publish_immutable_release.py' -v
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
 
       - name: Set up Java 25
         uses: actions/setup-java@v5
@@ -169,6 +169,10 @@ jobs:
           jar tf "dist/${OUTPUT_NAME}" | grep -Fxq 'plugin.yml'
           unzip -p "dist/${OUTPUT_NAME}" plugin.yml | grep -Fq "version: ${RELEASE_VERSION}"
           sha256sum "dist/${OUTPUT_NAME}"
+
+      - name: Verify every packaged class is Java 21 compatible
+        if: matrix.slimefun == 'legacy'
+        run: python3 scripts/verify_java21_jar.py "dist/${OUTPUT_NAME}"
 
       - name: Upload raw JAR artifact
         if: matrix.slimefun == 'legacy'
