@@ -167,6 +167,9 @@ jobs:
           test -s "target/${OUTPUT_NAME}"
           cp "target/${OUTPUT_NAME}" "dist/${OUTPUT_NAME}"
           jar tf "dist/${OUTPUT_NAME}" | grep -Fxq 'plugin.yml'
+          unzip -p "dist/${OUTPUT_NAME}" plugin.yml | grep -Fxq 'name: FlowerPower'
+          unzip -p "dist/${OUTPUT_NAME}" plugin.yml | grep -Fxq 'main: io.ncbpfluffybear.flowerpower.FlowerPowerPlugin'
+          jar tf "dist/${OUTPUT_NAME}" | grep -Fxq 'io/ncbpfluffybear/flowerpower/FlowerPowerPlugin.class'
           unzip -p "dist/${OUTPUT_NAME}" plugin.yml | grep -Fq "version: ${RELEASE_VERSION}"
           sha256sum "dist/${OUTPUT_NAME}"
 
