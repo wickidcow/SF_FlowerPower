@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Checkout FlowerPower
         uses: actions/checkout@v6
+      - name: Regression-test immutable manual publication policy (offline)
+        run: python3 -m unittest discover -s scripts -p 'test_publish_immutable_release.py' -v
 
       - name: Set up Java 25
         uses: actions/setup-java@v5
@@ -94,6 +96,7 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: maven
+
       - name: Install checksum-verified Apache Maven 3.10.0
         run: bash scripts/install_maven_3_10.sh
 
@@ -179,7 +182,7 @@ jobs:
   release:
     name: Publish 1.0.2 raw JAR
     needs: compatibility
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -202,21 +205,8 @@ jobs:
           jar tf "dist/${OUTPUT_NAME}" | grep -Fxq 'plugin.yml'
           sha256sum "dist/${OUTPUT_NAME}"
 
-      - name: Publish raw GitHub release asset
+      - name: Publish only a new release at an explicitly dispatched version tag
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
-        run: |
-          set -euo pipefail
-          TAG="v${RELEASE_VERSION}"
-          JAR="dist/${OUTPUT_NAME}"
-          NOTES="FlowerPower 1.0.2 adds Paper 26.3 alpha compatibility validation while retaining Minecraft/Paper 1.21.11, Paper 26.1.x and 26.2 support plus Slimefun Legacy and Slimefun United validation."
-          if [[ "$GITHUB_REF" != "refs/tags/$TAG" ]]; then
-            echo "Refusing publication: expected refs/tags/$TAG, got $GITHUB_REF" >&2
-            exit 1
-          fi
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            echo "Refusing to overwrite existing release $TAG or its assets." >&2
-            exit 1
-          fi
-            gh release create "$TAG" "$JAR" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SF_FlowerPower ${RELEASE_VERSION}" --notes "$NOTES"
+        run: bash scripts/publish_immutable_release.sh
