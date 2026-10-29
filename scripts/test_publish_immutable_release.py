@@ -18,8 +18,8 @@ class ImmutableReleaseTest(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.work = Path(self.tmp.name)
         (self.work / "dist").mkdir()
-        self.jar = self.work / "dist" / "SF_FlowerPower1.0.2.jar"
-        self.rewrite_jar("name: FlowerPower\nversion: 1.0.2\n")
+        self.jar = self.work / "dist" / "SF_FlowerPower1.0.3.jar"
+        self.rewrite_jar("name: FlowerPower\nversion: 1.0.3\n")
         bindir = self.work / "bin"
         bindir.mkdir()
         mock = bindir / "gh"
@@ -43,10 +43,10 @@ class ImmutableReleaseTest(unittest.TestCase):
             "GH_CREATE_FAIL": "0",
             "GITHUB_REPOSITORY": "wickidcow/SF_FlowerPower",
             "GITHUB_SHA": "a" * 40,
-            "GITHUB_REF": "refs/tags/v1.0.2",
+            "GITHUB_REF": "refs/tags/v1.0.3",
             "GITHUB_EVENT_NAME": "workflow_dispatch",
-            "RELEASE_VERSION": "1.0.2",
-            "OUTPUT_NAME": "SF_FlowerPower1.0.2.jar",
+            "RELEASE_VERSION": "1.0.3",
+            "OUTPUT_NAME": "SF_FlowerPower1.0.3.jar",
         })
 
     def rewrite_jar(self, descriptor):
@@ -60,6 +60,19 @@ class ImmutableReleaseTest(unittest.TestCase):
 
     def calls(self):
         return self.log.read_text(encoding="utf-8").splitlines() if self.log.exists() else []
+
+    def test_distinct_version_matches_pom_and_workflow(self):
+        import xml.etree.ElementTree as ET
+        pom = ET.parse(ROOT / "pom.xml")
+        version = pom.getroot().find("{http://maven.apache.org/POM/4.0.0}version")
+        self.assertIsNotNone(version)
+        self.assertEqual("1.0.3", version.text)
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn('RELEASE_VERSION: "1.0.3"', workflow)
+        self.assertIn('OUTPUT_NAME: "SF_FlowerPower1.0.3.jar"', workflow)
+        self.assertIn("name: Publish 1.0.3 raw JAR", workflow)
+        self.assertIn("-Dpaper.version=26.3.build.176-stable", workflow)
+        self.assertNotIn("26.3-rc-3.build.1-alpha", workflow)
 
     def test_workflow_does_not_publish_on_push_or_pr(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
@@ -77,8 +90,8 @@ class ImmutableReleaseTest(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         calls = self.calls()
         self.assertEqual(2, len(calls))
-        self.assertIn("release view v1.0.2", calls[0])
-        self.assertIn("release create v1.0.2 dist/SF_FlowerPower1.0.2.jar", calls[1])
+        self.assertIn("release view v1.0.3", calls[0])
+        self.assertIn("release create v1.0.3 dist/SF_FlowerPower1.0.3.jar", calls[1])
         self.assertIn("--verify-tag", calls[1])
         self.assertIn("--target " + "a" * 40, calls[1])
         self.assertFalse(any("release upload" in c or "release edit" in c or "--clobber" in c
@@ -107,10 +120,10 @@ class ImmutableReleaseTest(unittest.TestCase):
         self.assertEqual([], self.calls())
 
     def test_wrong_tag_and_filename_are_refused(self):
-        self.env["GITHUB_REF"] = "refs/tags/v1.0.3"
-        self.assertNotEqual(0, self.execute().returncode)
         self.env["GITHUB_REF"] = "refs/tags/v1.0.2"
-        self.env["OUTPUT_NAME"] = "SF_FlowerPower1.0.3.jar"
+        self.assertNotEqual(0, self.execute().returncode)
+        self.env["GITHUB_REF"] = "refs/tags/v1.0.3"
+        self.env["OUTPUT_NAME"] = "SF_FlowerPower1.0.2.jar"
         self.assertNotEqual(0, self.execute().returncode)
         self.assertEqual([], self.calls())
 
@@ -119,14 +132,14 @@ class ImmutableReleaseTest(unittest.TestCase):
         self.assertNotEqual(0, self.execute().returncode)
         self.rewrite_jar("name: FlowerPower\nversion: 1.0.1\n")
         self.assertNotEqual(0, self.execute().returncode)
-        self.rewrite_jar("name: Other\nversion: 1.0.2\n")
+        self.rewrite_jar("name: Other\nversion: 1.0.3\n")
         self.assertNotEqual(0, self.execute().returncode)
         self.assertEqual([], self.calls())
 
     def test_missing_artifact_and_failed_create_refuse_success(self):
         self.jar.unlink()
         self.assertNotEqual(0, self.execute().returncode)
-        self.rewrite_jar("name: FlowerPower\nversion: 1.0.2\n")
+        self.rewrite_jar("name: FlowerPower\nversion: 1.0.3\n")
         self.env["GH_CREATE_FAIL"] = "1"
         self.assertNotEqual(0, self.execute().returncode)
         self.assertEqual(2, len(self.calls()))
