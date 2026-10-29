@@ -81,7 +81,7 @@ class ImmutableReleaseTest(unittest.TestCase):
             "if: github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')",
             workflow)
         self.assertIn("run: bash scripts/publish_immutable_release.sh", workflow)
-        self.assertIn("test_publish_immutable_release.py", workflow)
+        self.assertIn("test_*.py", workflow)
         self.assertNotIn("gh release upload", workflow)
         self.assertNotIn("--clobber", workflow)
 
